@@ -1,0 +1,8 @@
+<!-- accessory_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ accessory.name }}</h1>
+  <p>Phone: <a href="{% url 'phone_detail' accessory.phone.id %}">{{ accessory.phone.name }}</a></p>
+{% endblock %}

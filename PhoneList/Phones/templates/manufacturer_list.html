@@ -1,0 +1,14 @@
+<!-- manufacturer_list.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 style="text-align: center;">Manufacturer List</h1>
+  <ul style="list-style-type: none; padding: 0; text-align: center;">
+    {% for manufacturer in manufacturers %}
+      <li style="margin: 10px; padding: 10px; border: 1px solid #ddd; background-color: #fff;">
+        <a href="{% url 'manufacturer_detail' manufacturer.id %}">{{ manufacturer.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
