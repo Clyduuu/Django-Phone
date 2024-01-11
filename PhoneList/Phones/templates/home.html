@@ -1,14 +1,17 @@
 <!-- home.html -->
 {% extends 'base.html' %}
+
 <!DOCTYPE html>
 <html>
 <head>
 </head>
 <body>
-        <ul>
-            <li><a href="{% url 'phone_list' %}">Phone List</a></li>
-            <li><a href="{% url 'manufacturer_list' %}">Manufacturer List</a></li>
-            <li><a href="{% url 'accessory_list' %}">Accessory List</a></li>
-        </ul>
+    <ul>
+        <li><a href="{% url 'myapp:phone_list' %}">Phone List</a></li>
+        <li><a href="{% url 'myapp:manufacturer_list' %}">Manufacturer List</a></li>
+        <li><a href="{% url 'myapp:accessory_list' %}">Accessory List</a></li>
+        <li><a href="{% url 'myapp:airpods_list' %}">Airpods List</a></li>
+        <li><a href="{% url 'myapp:tv_list' %}">TV List</a></li>
+    </ul>
 </body>
 </html>

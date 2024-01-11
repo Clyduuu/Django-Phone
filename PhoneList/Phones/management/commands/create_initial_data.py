@@ -8,7 +8,6 @@ class Command(BaseCommand):
         manufacturers = [
             {"name": "Manufacturer 1"},
             {"name": "Manufacturer 2"},
-            {"name": "Manufacturer 3"},
         ]
 
         phones = [
@@ -24,11 +23,18 @@ class Command(BaseCommand):
                 "price": 600.00,
                 "release_date": "2020-02-01",
             },
+            # Add Airpods and TV
             {
-                "name": "Phone 3",
-                "manufacturer_name": "Manufacturer 3",
-                "price": 700.00,
-                "release_date": "2020-03-01",
+                "name": "Airpods",
+                "manufacturer_name": "Manufacturer 1",
+                "price": 150.00,
+                "release_date": "2020-04-01",
+            },
+            {
+                "name": "TV",
+                "manufacturer_name": "Manufacturer 2",
+                "price": 1000.00,
+                "release_date": "2020-05-01",
             },
         ]
 
@@ -43,10 +49,16 @@ class Command(BaseCommand):
                 "phone_name": "Phone 2",
                 "price": 25.00,
             },
+            # Add accessories for Airpods and TV
             {
-                "name": "Accessory 3",
-                "phone_name": "Phone 3",
-                "price": 30.00,
+                "name": "Airpods Case",
+                "phone_name": "Airpods",
+                "price": 10.00,
+            },
+            {
+                "name": "TV Stand",
+                "phone_name": "TV",
+                "price": 50.00,
             },
         ]
 
