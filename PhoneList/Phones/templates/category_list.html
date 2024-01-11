@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">Category List</h2>
+            <a href="{% url 'category-create' %}" class="btn btn-success mb-3">Add New Category</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in categories %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ category.name }}</td>
+                                <td>
+                                    <a href="{% url 'category-detail' category.id %}" class="btn btn-info btn-sm">View</a>
+                                    <a href="{% url 'category-update' category.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{% url 'category-delete' category.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?')">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

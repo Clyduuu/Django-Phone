@@ -1,83 +1,51 @@
-<!-- base.html -->
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Phone{% endblock %}</title>
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Gadget Store{% endblock %}</title>
 
-        header {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
+    <!-- Bootstrap CSS - You can use a CDN or include your local copy -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-            background-color: #444;
-            padding: 10px;
-        }
-
-        nav ul li {
-            display: inline;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Gadget Store</a>
 
-<header>
-    <h1>Iphone Store</h1>
-    <nav>
-        <ul>
-            <li><a href="{% url 'myapp:phone_list' %}">Phone List</a></li>
-            <li><a href="{% url 'myapp:manufacturer_list' %}">Manufacturer List</a></li>
-            <li><a href="{% url 'myapp:accessory_list' %}">Accessory List</a></li>
-            <li><a href="{% url 'myapp:airpods_list' %}">Airpods List</a></li>
-            <li><a href="{% url 'myapp:tv_list' %}">TV List</a></li>
+        <!-- Navigation Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{% url 'category-list' %}">Categories</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'customer-list' %}">Customers</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'order-list' %}">Orders</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'order-item-list' %}">Order Items</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'product-list' %}">Products</a></li>
         </ul>
+
+        <!-- Responsive Navigation Toggle Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Responsive Navigation Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+        </div>
     </nav>
-</header>
 
-<main>
-    {% block content %}{% endblock %}
-</main>
+    <!-- Main Content Container -->
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
 
-<footer>
-    <p>&copy; {% now "Y" %} IPHONE Store</p>
-</footer>
+    <!-- Bootstrap JS - You can use a CDN or include your local copy -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

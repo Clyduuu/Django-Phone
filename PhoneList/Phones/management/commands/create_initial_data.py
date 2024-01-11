@@ -1,92 +1,49 @@
 from django.core.management.base import BaseCommand
-from Phones.models import Manufacturer, Phone, Accessory
+from django.utils import timezone
+from Phones.models import Brand, Category, Product, Customer, Order, OrderItem
+import random
 
 class Command(BaseCommand):
-    help = 'Create initial data for the application'
+    help = 'Populate initial data for the gadget store website'
 
     def handle(self, *args, **options):
-        manufacturers = [
-            {"name": "Manufacturer 1"},
-            {"name": "Manufacturer 2"},
-        ]
+        # Create Brands
+        brand_names = ['Samsung', 'Apple', 'Sony', 'LG', 'Dell']
+        brands = [Brand.objects.create(name=name) for name in brand_names]
 
-        phones = [
-            {
-                "name": "Phone 1",
-                "manufacturer_name": "Manufacturer 1",
-                "price": 500.00,
-                "release_date": "2020-01-01",
-            },
-            {
-                "name": "Phone 2",
-                "manufacturer_name": "Manufacturer 2",
-                "price": 600.00,
-                "release_date": "2020-02-01",
-            },
-            # Add Airpods and TV
-            {
-                "name": "Airpods",
-                "manufacturer_name": "Manufacturer 1",
-                "price": 150.00,
-                "release_date": "2020-04-01",
-            },
-            {
-                "name": "TV",
-                "manufacturer_name": "Manufacturer 2",
-                "price": 1000.00,
-                "release_date": "2020-05-01",
-            },
-        ]
+        # Create Categories
+        category_names = ['Smartphones', 'Laptops', 'TVs', 'Headphones', 'Cameras']
+        categories = [Category.objects.create(name=name) for name in category_names]
 
-        accessories = [
-            {
-                "name": "Accessory 1",
-                "phone_name": "Phone 1",
-                "price": 20.00,
-            },
-            {
-                "name": "Accessory 2",
-                "phone_name": "Phone 2",
-                "price": 25.00,
-            },
-            # Add accessories for Airpods and TV
-            {
-                "name": "Airpods Case",
-                "phone_name": "Airpods",
-                "price": 10.00,
-            },
-            {
-                "name": "TV Stand",
-                "phone_name": "TV",
-                "price": 50.00,
-            },
-        ]
+        # Create Products
+        for i in range(10):
+            product = Product.objects.create(
+                name=f'Product{i + 1}',
+                description=f'Description for Product{i + 1}',
+                price=random.uniform(100.0, 2000.0),
+                brand=brands[i % len(brands)],
+            )
+            product.category.set(random.sample(categories, random.randint(1, len(categories))))
 
-        for manufacturer_data in manufacturers:
-            _, created = Manufacturer.objects.get_or_create(**manufacturer_data)
-            if created:
-                self.stdout.write(self.style.SUCCESS(f"Manufacturer '{manufacturer_data['name']}' created"))
-            else:
-                self.stdout.write(self.style.SUCCESS(f"Manufacturer '{manufacturer_data['name']}' already exists"))
+        # Create Customers
+        customer_names = ['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Brown', 'Chris Davis']
+        customers = [Customer.objects.create(name=name, email=f'{name.lower().replace(" ", "_")}@example.com', phone_number='1234567890') for name in customer_names]
 
-        for phone_data in phones:
-            manufacturer_name = phone_data.pop("manufacturer_name")
-            manufacturer = Manufacturer.objects.get(name=manufacturer_name)
-            phone_data["manufacturer"] = manufacturer
-            _, created = Phone.objects.get_or_create(**phone_data)
-            if created:
-                self.stdout.write(self.style.SUCCESS(f"Phone '{phone_data['name']}' created"))
-            else:
-                self.stdout.write(self.style.SUCCESS(f"Phone '{phone_data['name']}' already exists"))
+        # Create Orders
+        for i in range(5):
+            order = Order.objects.create(
+                order_date=timezone.now(),
+                total_amount=random.uniform(100.0, 1000.0),
+                customer=customers[i % len(customers)],
+            )
 
-        for accessory_data in accessories:
-            phone_name = accessory_data.pop("phone_name")
-            phone = Phone.objects.get(name=phone_name)
-            accessory_data["phone"] = phone
-            _, created = Accessory.objects.get_or_create(**accessory_data)
-            if created:
-                self.stdout.write(self.style.SUCCESS(f"Accessory '{accessory_data['name']}' created"))
-            else:
-                self.stdout.write(self.style.SUCCESS(f"Accessory '{accessory_data['name']}' already exists"))
+            # Create OrderItems
+            for j in range(2):
+                product = random.choice(Product.objects.all())
+                order_item = OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=random.randint(1, 5),
+                )
 
-        self.stdout.write(self.style.SUCCESS("Initial data created successfully"))
+        self.stdout.write(self.style.SUCCESS('Successfully populated initial data'))

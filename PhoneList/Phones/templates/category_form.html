@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit Category{% else %}Add New Category{% endif %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">{% if form.instance.pk %}Edit Category{% else %}Add New Category{% endif %}</h2>
+            <a href="{% url 'category-list' %}" class="btn btn-primary mb-3">Back to Category List</a>
+
+            <form method="post" {% if form.instance.pk %}action="{% url 'category-update' form.instance.pk %}"{% else %}action="{% url 'category-create' %}"{% endif %} enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-success">{% if form.instance.pk %}Update{% else %}Add{% endif %} Category</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
